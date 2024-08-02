@@ -14,4 +14,5 @@ painter.drawCircle(new Point(32, 76), 12);
 painter.drawCircle(new Point(96, 76), 12);
 painter.drawLine(new Point(32, 32), new Point(96, 32));
 
-ImageWriter.toPPM(image);
+ImageWriter.toP3(image);
+ImageWriter.toP6(image);
