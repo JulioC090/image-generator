@@ -1,4 +1,3 @@
-import Point from '@/Point';
 import RawImage from '@/RawImage';
 
 export default class Painter {
@@ -14,20 +13,18 @@ export default class Painter {
     this.image.setPixel(x, y, color);
   }
 
-  drawRect(startPoint: Point, width: number, height: number) {
-    for (let i = startPoint.y; i < startPoint.y + width; i++) {
-      for (let j = startPoint.x; j < startPoint.x + height; j++) {
+  drawRect(x: number, y: number, width: number, height: number) {
+    for (let i = y; i < y + width; i++) {
+      for (let j = x; j < x + height; j++) {
         this.image.setPixel(i, j, this._fillColor);
       }
     }
   }
 
-  drawCircle(startPoint: Point, radius: number) {
-    for (let i = startPoint.x - radius; i <= startPoint.x + radius; i++) {
-      for (let j = startPoint.y - radius; j <= startPoint.y + radius; j++) {
-        const distance = Math.sqrt(
-          Math.pow(startPoint.x - i, 2) + Math.pow(startPoint.y - j, 2),
-        );
+  drawCircle(x: number, y: number, radius: number) {
+    for (let i = x - radius; i <= x + radius; i++) {
+      for (let j = y - radius; j <= y + radius; j++) {
+        const distance = Math.sqrt(Math.pow(x - i, 2) + Math.pow(y - j, 2));
 
         if (distance <= radius) {
           const t = 0.02;
@@ -47,20 +44,20 @@ export default class Painter {
     }
   }
 
-  drawLine(startPoint: Point, endPoint: Point) {
-    const dx = endPoint.x - startPoint.x;
-    const dy = endPoint.y - startPoint.y;
+  drawLine(x0: number, y0: number, x1: number, y1: number) {
+    const dx = x1 - x0;
+    const dy = y1 - y0;
     const steps = Math.max(Math.abs(dx), Math.abs(dy));
     const xInc = dx / steps;
     const yInc = dy / steps;
-    let x = startPoint.x;
-    let y = startPoint.y;
+    let x = x0;
+    let y = y0;
     for (let i = 0; i <= steps; i++) {
       this.image.setPixel(Math.round(x), Math.round(y), this._fillColor);
       x += xInc;
       y += yInc;
     }
-    this.image.setPixel(endPoint.x, endPoint.y, this._fillColor);
-    this.image.setPixel(startPoint.x, startPoint.y, this._fillColor);
+    this.image.setPixel(x1, y1, this._fillColor);
+    this.image.setPixel(x0, y0, this._fillColor);
   }
 }
